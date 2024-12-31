@@ -1,0 +1,25 @@
+header {
+  & .menu {
+    display: flex;
+    justify-content: right;
+    gap: 3rem;
+    margin-right: 1rem;
+
+    & ul {
+      display: flex;
+      gap: 2rem;
+      font-size: 1.5rem;
+      list-style: none;
+
+      & a {
+        color: rgb(41, 39, 39);
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+          opacity: 80%;
+        }
+      }
+    }
+  }
+}
