@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs', {title})%>
+
+    <body>
+        <%- include('../partials/header.ejs') %>
+            <div class="container">
+                <h1>
+                    <%= locals.title || 'title' %>
+                </h1>
+                <form action="/signup" method="post">
+                    <label for="userName">User name: </label>
+                    <input type="text" name="username" required>
+                    <label for="password">Password: </label>
+                    <input type="password" required name="password">
+                    <label for="confirmPassword">Confirm password: </label>
+                    <input type="password" name="confirmPassword" required>
+                    <button>Sign up</button>
+                </form>
+            </div>
+
+    </body>
+
+</html>
