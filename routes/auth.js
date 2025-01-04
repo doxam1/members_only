@@ -8,6 +8,13 @@ const LocalStrategy = require("passport-local");
 
 const pool = require("../db/pool");
 
+//validators
+const { signUpValidator } = require("../utilities/validators");
+
+//controllers
+const { signupPostControl } = require("../controllers/authControllers");
+
+//passport js config
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
@@ -48,9 +55,13 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+//routes
+
 authRouter.get("/signup", (req, res, next) => {
   res.render("pages/signup", { title: "Sign up" });
 });
+
+authRouter.post("/signup", [signUpValidator], signupPostControl);
 
 authRouter.get("/login", (req, res, next) => {
   res.render("pages/login", { title: "Log in" });

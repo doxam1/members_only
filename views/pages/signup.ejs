@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../partials/head.ejs', {title})%>
+<%- include('../partials/head.ejs', {title: 'Sign up' })%>
 
     <body>
         <%- include('../partials/header.ejs') %>
             <div class="container">
                 <h1>
-                    <%= locals.title || 'title' %>
+                    <%= locals.title || 'Sign up' %>
                 </h1>
+                <div class="errors">
+                    <% if (locals.errors && locals.errors.length> 0) { %>
+                        <ul>
+                            <% locals.errors.forEach((err)=> { %>
+                                <li>
+                                    # <%= err.msg %>
+                                </li>
+                                <% }) %>
+                        </ul>
+                        <% } %>
+                </div>
                 <form action="/signup" method="post">
                     <label for="userName">User name: </label>
                     <input type="text" name="username" required>
