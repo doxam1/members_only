@@ -1,7 +1,21 @@
 const { body } = require("express-validator");
+const pool = require("../db/pool");
 
 const signUpValidator = [
-  body("username").notEmpty().withMessage("Please enter username.").trim(),
+  body("username")
+    .notEmpty()
+    .withMessage("Please enter username.")
+    .trim()
+    .custom(async (value) => {
+      const result = await pool.query(
+        "SELECT username FROM users WHERE username = $1",
+        [value]
+      );
+      if (result.rows.length > 0) {
+        throw new Error("username already exists.");
+      }
+      return true;
+    }),
 
   body("password")
     .notEmpty()

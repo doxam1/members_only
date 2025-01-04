@@ -1,4 +1,8 @@
 const { validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+
+//queries import
+const { signUpNewUser } = require("../db/queries");
 
 const signupPostControl = (req, res, next) => {
   try {
@@ -8,10 +12,16 @@ const signupPostControl = (req, res, next) => {
       console.log(errors);
       return res.render("pages/signup", { errors: errors.array() });
     }
-
-    //await for query to db...
+    bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+      if (err) {
+        next(err);
+      } else {
+        await signUpNewUser(req.body.username, hashedPassword);
+      }
+    });
+    res.redirect("/");
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
