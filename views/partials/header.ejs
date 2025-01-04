@@ -9,8 +9,12 @@
             <li><a href="#">Somthing</a></li>
         </ul>
         <ul>
-            <li><a href="/signup">Sign up</a></li>
-            <li><a href="/login">Log in</a></li>
+            <% if (!locals.user) { %>
+                <li><a href="/signup">Sign up</a></li>
+                <li><a href="/login">Log in</a></li>
+                <% } else { %>
+                    <li><a href="/logout">Logout</a></li>
+                    <% } %>
         </ul>
     </div>
     <hr>

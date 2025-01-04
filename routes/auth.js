@@ -17,6 +17,7 @@ const { signupPostControl } = require("../controllers/authControllers");
 //passport js config
 passport.use(
   new LocalStrategy(async (username, password, done) => {
+    console.log("local strategy trigerred");
     try {
       const { rows } = await pool.query(
         "SELECT * FROM users WHERE username = $1",
@@ -58,24 +59,26 @@ passport.deserializeUser(async (id, done) => {
 //routes
 
 authRouter.get("/signup", (req, res, next) => {
-  res.render("pages/signup", { title: "Sign up" });
+  res.render("pages/signup", { title: "Sign up", user: req.user });
 });
 
 authRouter.post("/signup", [signUpValidator], signupPostControl);
 
 authRouter.get("/login", (req, res, next) => {
-  res.render("pages/login", { title: "Log in" });
+  console.log(req.flash());
+  res.render("pages/login", { title: "Log in", user: req.user });
 });
 
 authRouter.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/log-in",
+    failureRedirect: "/login",
+    failureFlash: true,
   })
 );
 
-authRouter.get("logout", (req, res, next) => {
+authRouter.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) {
       return next(err);
@@ -86,4 +89,5 @@ authRouter.get("logout", (req, res, next) => {
 
 module.exports = {
   authRouter,
+  passport,
 };

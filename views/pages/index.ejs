@@ -5,7 +5,8 @@
 
     <body>
         <%- include('../partials/header') %>
-            <h1>hello</h1>
+            <h1>hello <%= user?.username || null%>
+            </h1>
     </body>
 
 </html>

@@ -3,7 +3,9 @@ const path = require("path");
 require("dotenv").config();
 const morgan = require("morgan");
 
-const passport = require("passport");
+const flash = require("connect-flash");
+
+const { passport } = require("./routes/auth");
 const session = require("express-session");
 
 const app = express();
@@ -26,20 +28,12 @@ app.use(express.static(path.join(__dirname, "public")));
 //req.body parser
 app.use(express.urlencoded({ extended: false }));
 
-//routes import
-const { indexRouter } = require("./routes/indexRouter");
-app.use("/", indexRouter);
-
-//authentication routes:
-const { authRouter } = require("./routes/auth");
-app.use("/", authRouter);
-
 //passport js:
 //session
 app.use(
   session({
     store: new (require("connect-pg-simple")(session))({
-      store: pool,
+      pool,
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -48,7 +42,20 @@ app.use(
     // Insert express-session options here
   })
 );
+
+//for errors?
+app.use(flash());
+
+app.use(passport.initialize());
 app.use(passport.session());
+
+//authentication routes:
+const { authRouter } = require("./routes/auth");
+app.use("/", authRouter);
+
+//routes import
+const { indexRouter } = require("./routes/indexRouter");
+app.use("/", indexRouter);
 
 // error handler.
 app.use((req, res, next) => {
