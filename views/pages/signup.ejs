@@ -20,16 +20,36 @@
                         <% } %>
                 </div>
                 <form action="/signup" method="post">
+                    <label for="f_name">First name: </label>
+                    <input type="text" name="f_name" id="f_name" required>
+                    <label for="l_name">Last name: </label>
+                    <input type="text" name="l_name" id="l_name" required>
                     <label for="userName">User name: </label>
                     <input type="text" name="username" required>
                     <label for="password">Password: </label>
                     <input type="password" required name="password">
                     <label for="confirmPassword">Confirm password: </label>
                     <input type="password" name="confirmPassword" required>
+                    <label for="isAdmin">Admin? </label>
+                    <input type="checkbox" name="admin" id="isAdmin">
+                    <input type="password" name="adminPass" id='adminPass' placeholder="enter admin password" hidden>
                     <button>Sign up</button>
                 </form>
             </div>
 
     </body>
+
+    <script>
+        const isAdmin = document.querySelector('#isAdmin');
+
+        isAdmin.addEventListener('change', () => {
+            if (isAdmin.checked) {
+                document.querySelector('#adminPass').removeAttribute('hidden');
+            } else {
+                document.querySelector('#adminPass').setAttribute('hidden', '');
+            }
+        })
+
+    </script>
 
 </html>
