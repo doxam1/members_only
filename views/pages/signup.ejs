@@ -31,8 +31,9 @@
                     <label for="confirmPassword">Confirm password: </label>
                     <input type="password" name="confirmPassword" required>
                     <label for="isAdmin">Admin? </label>
-                    <input type="checkbox" name="admin" id="isAdmin">
-                    <input type="password" name="adminPass" id='adminPass' placeholder="enter admin password" hidden>
+                    <input type="checkbox" name="isAdmin" id="isAdmin">
+                    <input type="password" name="adminPass" id='adminPass' placeholder="enter admin password" hidden
+                        disabled>
                     <button>Sign up</button>
                 </form>
             </div>
@@ -45,8 +46,10 @@
         isAdmin.addEventListener('change', () => {
             if (isAdmin.checked) {
                 document.querySelector('#adminPass').removeAttribute('hidden');
+                document.querySelector('#adminPass').removeAttribute('disabled');
             } else {
                 document.querySelector('#adminPass').setAttribute('hidden', '');
+                document.querySelector('#adminPass').setAttribute('disabled', '');
             }
         })
 

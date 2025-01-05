@@ -62,7 +62,15 @@ authRouter.get("/signup", (req, res, next) => {
   res.render("pages/signup", { title: "Sign up", user: req.user });
 });
 
-authRouter.post("/signup", [signUpValidator], signupPostControl);
+authRouter.post(
+  "/signup",
+  (req, res, next) => {
+    console.log(req.body);
+    next();
+  },
+  [signUpValidator],
+  signupPostControl
+);
 
 authRouter.get("/login", (req, res, next) => {
   console.log(req.flash());

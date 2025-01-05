@@ -29,6 +29,23 @@ const signUpValidator = [
       return value === req.body.password;
     })
     .withMessage("password fields does not match."),
+
+  body("adminPass")
+    .optional()
+    .custom(async (value, { req }) => {
+      try {
+        const result = await pool.query(
+          "SELECT password FROM admin WHERE password = $1",
+          [value]
+        );
+        if (result.rows.length < 1) {
+          throw new Error("Wrong admin password.");
+        }
+        return true;
+      } catch (err) {
+        throw new Error("Wrong admin password.");
+      }
+    }),
 ];
 
 module.exports = {

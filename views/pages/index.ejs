@@ -6,6 +6,9 @@
     <body>
         <%- include('../partials/header') %>
             <h1>hello <%= user?.username || null%>
+                    <% if (user?.admin) { %>
+                        <p> you've got ADMIN privileges. </p>
+                        <% } %>
             </h1>
     </body>
 
