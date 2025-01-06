@@ -1,0 +1,102 @@
+<style>
+    .createPostContiner {
+        background-color: cornflowerblue;
+        max-width: 220px;
+        padding: 1rem;
+        border-radius: 12px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .createPostBtn {
+        border: none;
+        border-radius: 8px;
+        background-color: rgb(191, 207, 240);
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+
+        &:hover {
+            opacity: .8;
+        }
+    }
+
+    .modal {
+        border: 1px solid pink;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+        left: 0;
+        top: 0;
+
+        & .modalContent {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 18px;
+        }
+
+        & .closeModal {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+
+            &:hover,
+            &:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+    }
+</style>
+<div class="createPostContiner">
+    <div class="CreatePostTitle">What's on your mind, <%= locals.user?.f_name %>?
+
+    </div>
+    <hr>
+    <button class="createPostBtn">Add new post</button>
+</div>
+
+<div class="modal">
+    <div class="modalContent">
+        <span class="closeModal">&times;</span>
+        <span>
+            this is a test
+        </span>
+
+    </div>
+
+</div>
+
+<script>
+
+    // modal script
+    const AddPostBtn = document.querySelector('.createPostBtn');
+    const NewPostModal = document.querySelector('.modal');
+    const closeModal = document.querySelector('.modal span');
+
+    AddPostBtn.onclick = () => {
+        NewPostModal.style.display = 'flex';
+    }
+
+    closeModal.onclick = () => {
+        NewPostModal.style.display = 'none';
+    }
+
+    //close modal when click outside of content.
+    window.onclick = function (event) {
+        if (event.target == NewPostModal) {
+            NewPostModal.style.display = "none";
+        }
+    }
+    ////////////////
+</script>
