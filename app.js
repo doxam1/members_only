@@ -57,6 +57,10 @@ app.use("/", authRouter);
 const { indexRouter } = require("./routes/indexRouter");
 app.use("/", indexRouter);
 
+//msgs router
+const { msgRouter } = require("./routes/msgRouter");
+app.use("/", msgRouter);
+
 // error handler.
 app.use((req, res, next) => {
   throw new Error("somthing broke!");

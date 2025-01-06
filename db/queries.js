@@ -17,6 +17,18 @@ async function signUpNewUser(
   }
 }
 
+async function createPostQuery(title, content, user_id) {
+  try {
+    await pool.query(
+      "INSERT INTO messages (title, content, user_id) VALUES ($1, $2, $3)",
+      [title, content, user_id]
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
   signUpNewUser,
+  createPostQuery,
 };

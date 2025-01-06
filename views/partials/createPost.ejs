@@ -41,6 +41,17 @@
             border: 1px solid #888;
             width: 80%;
             border-radius: 18px;
+
+            & .modalForm {
+
+                & textarea {
+                    resize: none;
+                }
+
+                & button {
+                    margin-top: 1rem;
+                }
+            }
         }
 
         & .closeModal {
@@ -57,6 +68,17 @@
             }
         }
     }
+
+    @media screen and (min-width: 600px) {
+        .modalContent {
+            max-width: 60%;
+        }
+
+        .modalForm {
+            max-width: 80%;
+            margin: 0 auto;
+        }
+    }
 </style>
 <div class="createPostContiner">
     <div class="CreatePostTitle">What's on your mind, <%= locals.user?.f_name %>?
@@ -69,9 +91,13 @@
 <div class="modal">
     <div class="modalContent">
         <span class="closeModal">&times;</span>
-        <span>
-            this is a test
-        </span>
+        <form action="/createPost" method="post" class="modalForm">
+            <label for="title">title: </label>
+            <input type="text" name="title" id="title" required>
+            <label for="content">Content: </label>
+            <textarea name="content" id="content" required rows="10" cols="10"></textarea>
+            <button type="submit"> Post </button>
+        </form>
 
     </div>
 
