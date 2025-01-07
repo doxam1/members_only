@@ -9,8 +9,6 @@ const { goldMemberController } = require("../controllers/indexControllers");
 
 indexRouter.get("/", async (req, res, next) => {
   const messages = await getAllMessagesQuery();
-  console.log(messages);
-
   res.render("pages/index", { user: req.user, messages });
 });
 

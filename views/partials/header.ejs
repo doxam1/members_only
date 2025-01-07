@@ -4,26 +4,32 @@
             <a href="/"><img src="/images/logo.webp" alt=""></a>
             <span>Who said that?! <br>
                 <% if (locals.user && locals.user.status=='silver' ) { %>
-                    <div style='color:silver;'> Silver member </div>
+                    <div style='color:silver;'>
+                        <%= user.f_name + ' ' + user.l_name%><br> Silver member
+                    </div>
                     <% } else if (locals.user && locals.user.status=='gold' ) { %>
-                        <div style='color:gold;'> Gold member </div>
+                        <div style='color:gold;'>
+                            <%= user.f_name + ' ' + user.l_name %><br> Gold member
+                        </div>
                         <% } else { %>
                             <% } %>
             </span>
         </div>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="#">Somthing</a></li>
-        </ul>
-        <ul>
-            <% if (!locals.user) { %>
-                <li><a href="/signup">Sign up</a></li>
-                <li><a href="/login">Log in</a></li>
-                <% } else { %>
-                    <li><a href="/logout">Logout</a></li>
-                    <% } %>
-        </ul>
+        <div class="links">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <!-- <li><a href="#">Somthing</a></li> -->
+            </ul>
+            <ul>
+                <% if (!locals.user) { %>
+                    <li><a href="/signup">Sign up</a></li>
+                    <li><a href="/login">Log in</a></li>
+                    <% } else { %>
+                        <li><a href="/logout">Logout</a></li>
+                        <% } %>
+            </ul>
+        </div>
     </div>
     <% if (locals.user?.status=='silver' ) { %>
         <a href="#" class="goldMemberModalBtn">
@@ -63,12 +69,16 @@
         const goldMemberForm = document.querySelector('#goldMemberForm');
         const errorContainer = document.querySelector('.errorContainer');
 
-        openGoldMemberModal.onclick = () => {
-            goldMemberModal.style.display = 'flex';
+        if (openGoldMemberModal) {
+            openGoldMemberModal.onclick = () => {
+                goldMemberModal.style.display = 'flex';
+            }
         }
 
-        closeGoleMemberModal.onclick = () => {
-            goldMemberModal.style.display = 'none';
+        if (openGoldMemberModal) {
+            closeGoleMemberModal.onclick = () => {
+                goldMemberModal.style.display = 'none';
+            }
         }
 
         // When the user clicks anywhere outside of the modal, close it
