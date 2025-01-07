@@ -48,5 +48,17 @@ form {
     border-radius: 12px;
     border: 1px solid white;
     padding: 1rem;
+    position: relative;
+  }
+}
+
+.adminDelBtnContainer {
+  position: absolute;
+  top: 3%;
+  right: 3%;
+
+  & button {
+    background-color: crimson;
+    color: white;
   }
 }

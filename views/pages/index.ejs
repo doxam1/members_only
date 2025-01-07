@@ -27,6 +27,14 @@
                                     <p>
                                         <%= msg.content %>
                                     </p>
+                                    <% if (locals.user?.admin) { %>
+                                        <form action="/deletePost" method="post">
+                                            <div class="adminDelBtnContainer">
+                                                <input type="text" name='msg_id' hidden value="<%= msg.msg_id %>">
+                                                <button type="submit">Delete Post</button>
+                                            </div>
+                                        </form>
+                                        <% } %>
                                 </div>
                                 <% }) %>
                         </div>

@@ -31,7 +31,7 @@ async function createPostQuery(title, content, user_id) {
 async function getAllMessagesQuery() {
   try {
     const results = await pool.query(
-      "SELECT *,f_name,l_name  FROM messages JOIN users ON messages.user_id = users.id ORDER BY timestamp DESC"
+      "SELECT messages.id AS msg_id, messages.*,f_name,l_name FROM messages JOIN users ON messages.user_id = users.id ORDER BY timestamp DESC"
     );
     return results.rows;
   } catch (err) {
@@ -47,6 +47,15 @@ async function changeStatusToGold(user_id) {
     ]);
   } catch (err) {
     console.error("Error in changing member status: ", err);
+  }
+}
+
+async function deletePostQuery(msg_id) {
+  try {
+    await pool.query("DELETE FROM messages WHERE messages.id = $1", [msg_id]);
+    console.log(`message id: ${msg_id} deleted successfully.`);
+  } catch (err) {
+    console.error("Error deleting post: ", err);
   }
 }
 
@@ -67,6 +76,7 @@ module.exports = {
   createPostQuery,
   getAllMessagesQuery,
   changeStatusToGold,
+  deletePostQuery,
 
   /* getUserByUserIdQuery */
 };
