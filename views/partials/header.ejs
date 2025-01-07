@@ -1,7 +1,15 @@
 <header>
     <div class="menu">
         <div class="logo">
-            <a href="/"><img src="/images/logo.webp" alt=""></a> <span>Who said that?!</span>
+            <a href="/"><img src="/images/logo.webp" alt=""></a>
+            <span>Who said that?! <br>
+                <% if (locals.user && locals.user.status=='silver' ) { %>
+                    <div style='color:silver;'> Silver member </div>
+                    <% } else if (locals.user && locals.user.status=='gold' ) { %>
+                        <div style='color:gold;'> Gold member </div>
+                        <% } else { %>
+                            <% } %>
+            </span>
         </div>
         <ul>
             <li><a href="/">Home</a></li>
@@ -17,5 +25,97 @@
                     <% } %>
         </ul>
     </div>
-    <hr>
+    <% if (locals.user?.status=='silver' ) { %>
+        <a href="#" class="goldMemberModalBtn">
+            <div class="goldMemberDiv">
+                Become gold member now!
+            </div>
+        </a>
+        <% } %>
+            <hr>
 </header>
+
+<div class="goldMemberModal">
+    <div class="goldMemberContent">
+        <span class="closeModal">&times; </span>
+        <form action="/gold" method="post" id="goldMemberForm">
+            <p>When you become a Gold Member, you'll be able to see who wrote all the notes on our site. <br> all you
+                need
+                to do
+                is solve this riddle: </p>
+            <p><strong>"I am a three-digit number. My tens digit is five more than my ones digit. My hundreds digit is
+                    eight
+                    less than my tens digit. What number am I?"</strong></p>
+            <label for="goldMemberAnswer">Answer: </label>
+            <input type="text" name="goldMemberAnswer" id="goldMemberAnswer" required>
+            <div class="errorContainer"></div>
+            <button type="submit"> Check </button>
+        </form>
+    </div>
+
+    <script>
+        const openGoldMemberModal = document.querySelector('.goldMemberModalBtn');
+
+        const goldMemberModal = document.querySelector('.goldMemberModal');
+
+        const closeGoleMemberModal = document.querySelector('.closeModal');
+
+        const goldMemberForm = document.querySelector('#goldMemberForm');
+        const errorContainer = document.querySelector('.errorContainer');
+
+        openGoldMemberModal.onclick = () => {
+            goldMemberModal.style.display = 'flex';
+        }
+
+        closeGoleMemberModal.onclick = () => {
+            goldMemberModal.style.display = 'none';
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        document.body.onclick = function (event) {
+            if (event.target == goldMemberModal) {
+                goldMemberModal.style.display = 'none';
+            }
+        }
+
+        goldMemberForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            errorContainer.innerHTML = '';
+
+            const formData = new FormData(goldMemberForm);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/gold', {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (!response.ok) {
+                    const result = await response.json();
+                    if (result.errors) {
+                        result.errors.forEach((error) => {
+                            const errorElement = document.createElement("p");
+                            errorElement.textContent = error.msg;
+                            errorElement.style.color = 'red';
+                            errorContainer.appendChild(errorElement);
+                        })
+                    }
+                } else {
+                    const result = await response.json();
+                    window.location.reload();
+                }
+            } catch (err) {
+                console.log("Error:", err)
+            }
+        })
+
+
+
+
+    </script>
+</div>

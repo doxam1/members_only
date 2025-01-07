@@ -8,11 +8,28 @@
             <% if (locals.user) { %>
                 <%- include('../partials/createPost.ejs') %>
                     <% } %>
-                        <h1>hello <%= user?.username || null%>
-                                <% if (user?.admin) { %>
-                                    <p> you've got ADMIN privileges. </p>
-                                    <% } %>
-                        </h1>
+                        <div class="container allMsgs">
+                            <% locals.messages.forEach(msg=> { %>
+                                <div class="msgContainer">
+                                    <h3>
+                                        <%= msg.title %>
+                                    </h3>
+                                    <h4>From: <i>
+                                            <%= locals.user?.status=='gold' || locals.user?.id==msg.user_id ? msg.f_name
+                                                + ' ' + msg.l_name : '*******' %>
+                                        </i><br> At: <i>
+                                            <%= new Date(msg.timestamp + 'Z' ).toLocaleString('en-US', {
+                                                weekday: 'short' , year: 'numeric' , day: 'numeric' , month: 'short' ,
+                                                hour: 'numeric' , minute: 'numeric' , second: 'numeric' , hour12: true
+                                                }) %>
+                                        </i>
+                                    </h4>
+                                    <p>
+                                        <%= msg.content %>
+                                    </p>
+                                </div>
+                                <% }) %>
+                        </div>
     </body>
 
 </html>

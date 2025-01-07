@@ -28,7 +28,45 @@ async function createPostQuery(title, content, user_id) {
   }
 }
 
+async function getAllMessagesQuery() {
+  try {
+    const results = await pool.query(
+      "SELECT *,f_name,l_name  FROM messages JOIN users ON messages.user_id = users.id"
+    );
+    return results.rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function changeStatusToGold(user_id) {
+  try {
+    await pool.query("UPDATE users SET status = $1 WHERE id = $2", [
+      "gold",
+      user_id,
+    ]);
+  } catch (err) {
+    console.error("Error in changing member status: ", err);
+  }
+}
+
+// async function getUserByUserIdQuery(user_id) {
+//   try {
+//     const results = await pool.query(
+//       "SELECT f_name, l_name FROM users WHERE id = $1",
+//       [user_id]
+//     );
+//     return results.rows;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
 module.exports = {
   signUpNewUser,
   createPostQuery,
+  getAllMessagesQuery,
+  changeStatusToGold,
+
+  /* getUserByUserIdQuery */
 };

@@ -10,7 +10,6 @@ const signupPostControl = async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      console.log(errors);
       return res.render("pages/signup", { errors: errors.array() });
     }
     const { f_name, l_name, adminPass } = req.body;

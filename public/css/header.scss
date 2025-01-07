@@ -49,3 +49,59 @@ header {
     }
   }
 }
+
+.goldMemberDiv {
+  max-width: 120px;
+  height: 80px;
+  box-shadow: 0.8px 0.8px 6px 2px gold;
+  position: absolute;
+  bottom: 100;
+  right: 1%;
+  background-color: rgb(59, 59, 58);
+  padding: 1rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: rgba(230, 182, 25, 0.774);
+  font-weight: 800;
+
+  &:hover {
+    opacity: 0.95;
+  }
+  &:active {
+    scale: 1.1;
+  }
+}
+
+.goldMemberModal {
+  display: none;
+  height: 100%;
+  width: 100%;
+  // z-index: 1001;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+
+  & .goldMemberContent {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  & .closeModal {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+
+    &:hover,
+    &:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}

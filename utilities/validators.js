@@ -1,5 +1,6 @@
 const { body } = require("express-validator");
 const pool = require("../db/pool");
+require("dotenv").config();
 
 const signUpValidator = [
   body("username")
@@ -48,6 +49,18 @@ const signUpValidator = [
     }),
 ];
 
+const goldMemberValidator = [
+  body("goldMemberAnswer")
+    .trim()
+    .custom((value) => {
+      if (value != process.env.GOLD_MEMBER_RIDDLE_ANSWER) {
+        throw new Error("wrong answer.");
+      }
+      return true;
+    }),
+];
+
 module.exports = {
   signUpValidator,
+  goldMemberValidator,
 };
