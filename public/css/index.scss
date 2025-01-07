@@ -39,6 +39,7 @@ form {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-auto-rows: 220px;
   // width: 100%;
+  grid-auto-flow: dense row-reverse;
   padding: 1rem;
   gap: 1rem;
 

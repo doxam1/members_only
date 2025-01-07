@@ -31,7 +31,7 @@ async function createPostQuery(title, content, user_id) {
 async function getAllMessagesQuery() {
   try {
     const results = await pool.query(
-      "SELECT *,f_name,l_name  FROM messages JOIN users ON messages.user_id = users.id"
+      "SELECT *,f_name,l_name  FROM messages JOIN users ON messages.user_id = users.id ORDER BY timestamp DESC"
     );
     return results.rows;
   } catch (err) {
