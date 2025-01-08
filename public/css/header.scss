@@ -1,13 +1,14 @@
 header {
   background: linear-gradient(rgb(158, 158, 180), rgb(138, 153, 148));
+  position: sticky;
+  top: -124px;
+  z-index: 1002;
   & .menu {
     // padding: 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    position: sticky;
-    top: 0;
 
     & .logo {
       margin: 0 auto;
@@ -56,6 +57,7 @@ header {
 }
 @media screen and (min-width: 500px) {
   header {
+    top: 0;
     & .menu {
       flex-direction: row;
       gap: 4rem;
