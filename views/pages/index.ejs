@@ -6,11 +6,11 @@
     <body>
         <%- include('../partials/header') %>
             <% if (locals.user) { %>
-                <%- include('../partials/createPost.ejs') %>
+                <%- include('../partials/createPost.ejs', {user: locals.user}) %>
                     <% } %>
                         <div class="container allMsgs">
                             <% locals.messages.forEach(msg=> { %>
-                                <div class="msgContainer">
+                                <div class="msgContainer user_id_<%= msg.user_id %>">
                                     <h3>
                                         <%= msg.title %>
                                     </h3>

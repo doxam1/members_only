@@ -1,26 +1,37 @@
 <style>
     .createPostContiner {
         background-color: cornflowerblue;
-        max-width: 220px;
+        max-width: fit-content;
         padding: 1rem;
         border-radius: 12px;
         margin: 0 auto;
         text-align: center;
-    }
+        position: sticky;
+        top: 1%;
+        z-index: 1001;
 
-    .createPostBtn {
-        border: none;
-        border-radius: 8px;
-        background-color: rgb(191, 207, 240);
-        padding: 0.5rem 1rem;
-        cursor: pointer;
+        & .onMindBtnsContainer {
+            display: flex;
+            gap: 1rem;
 
-        &:hover {
-            opacity: .8;
+            & .createPostBtn {
+                border: none;
+                border-radius: 8px;
+                background-color: rgb(191, 207, 240);
+                padding: 0.5rem 1rem;
+                cursor: pointer;
+
+                &:hover {
+                    opacity: .8;
+                }
+            }
         }
     }
 
+
+
     .modal {
+        z-index: 10002;
         border: 1px solid pink;
         display: none;
         align-items: center;
@@ -85,7 +96,10 @@
 
     </div>
     <hr>
-    <button class="createPostBtn">Add new post</button>
+    <div class="onMindBtnsContainer">
+        <button class="createPostBtn">New post</button>
+        <button class="createPostBtn postsType">My posts</button>
+    </div>
 </div>
 
 <div class="modal">
@@ -95,13 +109,17 @@
             <label for="title">title: </label>
             <input type="text" name="title" id="title" required>
             <label for="content">Content: </label>
-            <textarea name="content" id="content" required rows="10" cols="10"></textarea>
-            <button type="submit"> Post </button>
+            <textarea name="content" id="content" required rows="10" cols="10" placeholder="1000 characters max."
+                maxlength="1000"></textarea>
+            <button type="submit" class="submitPostBtn"> Post </button>
         </form>
 
     </div>
 
 </div>
+
+<!-- need a data attribute to pass the user_id to another script for showing own msgs -->
+<div id="user-data" data-user-id="<%= user.id %>"></div>
 
 <script>
 
@@ -125,4 +143,36 @@
         }
     }
     ////////////////
+
+
+    // disabled form submit after submit.
+    document.querySelector('.modalForm').addEventListener('submit', function () {
+        document.querySelector('.submitPostBtn').disabled = true;
+    })
+
+    const myPostBtn = document.querySelector('.postsType')
+
+    myPostBtn.onclick = () => {
+        const AllMsgs = document.querySelectorAll('.msgContainer');
+
+        const userId = document.getElementById('user-data').dataset.userId;
+
+
+
+        if (myPostBtn.textContent == 'My posts') {
+            AllMsgs.forEach(msg => {
+                if (msg.classList.contains(`user_id_${userId}`)) {
+                    msg.style.display = 'block';
+                } else {
+                    msg.style.display = 'none';
+                }
+            })
+            myPostBtn.textContent = 'All posts'
+        } else {
+            AllMsgs.forEach(msg => {
+                msg.style.display = 'block';
+                myPostBtn.textContent = 'My posts'
+            })
+        }
+    }
 </script>
